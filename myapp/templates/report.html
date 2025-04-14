@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activity Summary</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d95550;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+    }
+
+    .summary-panel {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 1.2em;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .panel-icon {
+      margin-right: 10px;
+      font-size: 1.5em;
+      color: #d95550;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .focus-hours {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .focus-hours h2 {
+      color: #d95550;
+      margin-bottom: 20px;
+    }
+
+    .focus-summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 1.1em;
+    }
+
+    .focus-summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .lock-icon {
+      color: #d95550;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Activity Summary</h1>
+  <div class="summary-panel">
+    <div class="summary-item">
+      <span class="panel-icon">🕒</span>
+      <span>Hours Focused: <strong>10</strong></span>
+    </div>
+    <div class="summary-item">
+      <span class="panel-icon">📅</span>
+      <span>Days Accessed: <strong>15</strong></span>
+    </div>
+    <div class="summary-item">
+      <span class="panel-icon">📈</span>
+      <span>Day Streak: <strong>5</strong></span>
+    </div>
+  </div>
+
+  <div class="focus-hours">
+    <h2>Focus Hours</h2>
+    <div class="summary-panel">
+      <div class="focus-summary-item">
+        <span>This Week</span>
+        <span>8 hours</span>
+      </div>
+      <div class="focus-summary-item">
+        <span>This Month</span>
+        <span>30 hours</span>
+      </div>
+      <div class="focus-summary-item">
+        <span>This Year</span>
+        <span>200 hours</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    * This report will be available when you are logged in
+  </div>
+
+</body>
+</html>

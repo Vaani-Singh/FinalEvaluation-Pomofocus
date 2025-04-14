@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d95550;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+    }
+
+    .settings-panel {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+
+    .setting-label {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    .setting-input {
+      width: 60%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+    }
+
+    .checkbox-label input {
+      margin-right: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .button {
+      background-color: #d95550;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 1.1em;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #c04c47;
+    }
+
+    .range-input {
+      width: 60%;
+    }
+
+    select {
+      width: 60%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Settings</h1>
+  <div class="settings-panel">
+    <div class="setting-item">
+      <span class="setting-label">Pomodoro Time (minutes)</span>
+      <input type="number" class="setting-input" value="25" />
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Short Break Time (minutes)</span>
+      <input type="number" class="setting-input" value="5" />
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Long Break Time (minutes)</span>
+      <input type="number" class="setting-input" value="15" />
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Auto Start Breaks
+      </label>
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Auto Start Pomodoros
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Long Break Interval</span>
+      <input type="number" class="setting-input" value="4" />
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Auto Check Tasks
+      </label>
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Auto Switch Tasks
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Alarm Sound Volume</span>
+      <input type="range" class="range-input" min="0" max="100" value="50" />
+ </div>
+    <div class="setting-item">
+      <span class="setting-label">Ticking Sound Volume</span>
+      <input type="range" class="range-input" min="0" max="100" value="50" />
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Color Themes</span>
+      <select class="setting-input">
+        <option value="default">Default</option>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+        <option value="colorful">Colorful</option>
+      </select>
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Dark Mode when running
+      </label>
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Small Window
+      </label>
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Open Notification
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Reminder Interval (min)</span>
+      <input type="number" class="setting-input" value="5" />
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Mobile Alarm
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Integration</span>
+      <select class="setting-input">
+        <option value="todoist">Todoist</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="setting-item checkbox-label">
+      <label>
+        <input type="checkbox" /> Webhook
+      </label>
+    </div>
+    <button class="button">Save Settings</button>
+  </div>
+
+  <div class="footer">
+    * Adjust your settings as needed for optimal productivity
+  </div>
+
+</body>
+</html>
