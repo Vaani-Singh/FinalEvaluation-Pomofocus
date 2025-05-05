@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pomodoro Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Welcome to Pomodoro</h1>
+    <button onclick="logout()">Logout</button>
+
+    <div>
+        <input type="text" id="taskName" placeholder="Task name">
+        <input type="number" id="estPomodoros" placeholder="Estimated Pomodoros">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <script src="{% static 'js/task.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task List</title>
+</head>
+<body>
+  <h1>Task List</h1>
+
+  <!-- Add Task -->
+  <input type="text" id="task-title" placeholder="Enter task title">
+  <button onclick="addTask()">Add Task</button>
+
+  <!-- Task List -->
+  <div id="message">Loading...</div>
+  <ul id="task-list"></ul>
+
+  <script>
+    const API_URL = "http://127.0.0.1:5000/api/tasks";
+
+    // Fetch and display tasks
+    async function fetchTasks() {
+      const taskList = document.getElementById("task-list");
+      const message = document.getElementById("message");
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Failed to fetch tasks");
+        const tasks = await response.json();
+
+        taskList.innerHTML = "";
+        message.textContent = "";
+
+        if (tasks.length === 0) {
+          message.textContent = "No tasks found.";
+        } else {
+          tasks.forEach(task => {
+            const li = document.createElement("li");
+            li.textContent = task.title + (task.completed ? " ✅" : "");
+
+            // Optional: Delete button
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "❌";
+            delBtn.onclick = () => deleteTask(task.id);
+
+            li.appendChild(delBtn);
+            taskList.appendChild(li);
+          });
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        message.textContent = "Error loading tasks.";
+      }
+    }
+
+    // Add new task
+    async function addTask() {
+      const titleInput = document.getElementById("task-title");
+      const title = titleInput.value.trim();
+      if (!title) {
+        alert("Please enter a task title");
+        return;
+      }
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: title })  // As expected by your app.py
+        });
+
+        if (!response.ok) throw new Error("Failed to add task");
+
+        titleInput.value = "";
+        fetchTasks(); // Refresh list
+      } catch (err) {
+        console.error("Error adding task:", err);
+        alert("Could not add task.");
+      }
+    }
+
+    // Delete a task
+    async function deleteTask(taskId) {
+      try {
+        const response = await fetch(`${API_URL}/${taskId}`, { method: "DELETE" });
+        if (!response.ok) throw new Error("Delete failed");
+        fetchTasks(); // Refresh list
+      } catch (err) {
+        console.error("Error deleting task:", err);
+      }
+    }
+
+    // Load on page load
+    window.onload = fetchTasks;
+  </script>
+</body>
+</html>

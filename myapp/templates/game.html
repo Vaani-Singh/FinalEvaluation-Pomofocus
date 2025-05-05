@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Games</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff8f7;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #d95550;
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .btn {
+      background-color: #d95550;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      margin: 20px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #bb4945;
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .card {
+      width: 100px;
+      height: 100px;
+      background-color: #ffe5e2;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .flipped {
+      background-color: #ff8a80;
+      transform: rotateY(180deg);
+      color: white;
+    }
+
+    .matched {
+      background-color: #d95550;
+      color: white;
+      pointer-events: none;
+    }
+
+    .instructions {
+      text-align: left;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .return-btn {
+      display: inline-block;
+      margin: 40px auto 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    h3, h4 {
+      color: #d95550;
+    }
+
+    canvas {
+      border: 2px solid #d95550;
+      border-radius: 10px;
+      background: #ffe5e2;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<header>Focus Memory Game</header>
+
+<div class="container">
+  <div class="instructions">
+    <h3>How to Play</h3>
+    <p>Click "Start Challenge" to begin. Flip the cards and try to match all the pairs. Matched cards will remain revealed. You win once all cards are matched.</p>
+    <h4>Why This Game?</h4>
+    <p>This mini-game sharpens your memory and helps reset your brain during Pomodoro breaks, increasing your focus and motivation for the next session.</p>
+  </div>
+
+  <button class="btn" onclick="startChallenge()">Start Challenge</button>
+
+  <div id="game-container" style="display:none">
+    <div id="game-board" class="game-board"></div>
+    <button class="btn" onclick="startNewGame()">Start New Game</button>
+  </div>
+
+  <hr style="margin: 50px 0; border-color: #ffccc7;">
+
+  <div class="instructions">
+    <h3>Not interesting? Need another one?</h3>
+    <p>We got you! Try this fun and fast-paced ball-catching challenge to boost your reflexes and coordination.</p>
+  </div>
+
+  <button class="btn" onclick="startBallGame()">Play Ball Catch Game</button>
+
+  <div id="ball-game-container" style="display:none;">
+    <canvas id="ball-game" width="600" height="400"></canvas><br>
+    <button class="btn" onclick="resetBallGame()">Restart Ball Game</button>
+  </div>
+
+  <a href="/" class="btn return-btn">⬅ Return to Home</a>
+</div>
+
+<script>
+  // Memory Game
+  let flippedCards = [];
+  let matchedCards = [];
+  const cardSymbols = ['🍎','🍌','🍒','🍉','🍇','🍊','🥝','🍍'];
+  let shuffled = [];
+
+  function shuffleCards() {
+    shuffled = [...cardSymbols, ...cardSymbols];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  }
+
+  function createBoard() {
+    const board = document.getElementById('game-board');
+    board.innerHTML = '';
+    shuffled.forEach((symbol, index) => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.dataset.index = index;
+      card.addEventListener('click', () => flipCard(card, symbol));
+      board.appendChild(card);
+    });
+  }
+
+  function flipCard(card, symbol) {
+    if (flippedCards.length === 2 || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+    card.classList.add('flipped');
+    card.textContent = symbol;
+    flippedCards.push({ card, symbol });
+
+    if (flippedCards.length === 2) {
+      const [first, second] = flippedCards;
+      if (first.symbol === second.symbol) {
+        first.card.classList.add('matched');
+        second.card.classList.add('matched');
+        matchedCards.push(first.card, second.card);
+        flippedCards = [];
+        if (matchedCards.length === shuffled.length) {
+          setTimeout(() => alert('🎉 You won! Great focus!'), 300);
+        }
+      } else {
+        setTimeout(() => {
+          first.card.classList.remove('flipped');
+          second.card.classList.remove('flipped');
+          first.card.textContent = '';
+          second.card.textContent = '';
+          flippedCards = [];
+        }, 1000);
+      }
+    }
+  }
+
+  function startChallenge() {
+    document.getElementById('game-container').style.display = 'block';
+    document.getElementById('ball-game-container').style.display = 'none';
+    startNewGame();
+  }
+
+  function startNewGame() {
+    flippedCards = [];
+    matchedCards = [];
+    shuffleCards();
+    createBoard();
+  }
+
+  // Ball Game
+  let canvas, ctx, x, y, dx, dy, radius, paddleX, paddleWidth, paddleHeight, rightPressed, leftPressed, ballInterval;
+
+  function startBallGame() {
+    document.getElementById('ball-game-container').style.display = 'block';
+    document.getElementById('game-container').style.display = 'none';
+    initBallGame();
+  }
+
+  function resetBallGame() {
+    clearInterval(ballInterval);
+    initBallGame();
+  }
+
+  function initBallGame() {
+    canvas = document.getElementById('ball-game');
+    ctx = canvas.getContext('2d');
+    x = canvas.width / 2;
+    y = canvas.height - 30;
+    dx = 2;
+    dy = -2;
+    radius = 10;
+    paddleWidth = 100;
+    paddleHeight = 10;
+    paddleX = (canvas.width - paddleWidth) / 2;
+    rightPressed = false;
+    leftPressed = false;
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    ballInterval = setInterval(drawBallGame, 10);
+  }
+
+  function keyDownHandler(e) {
+    if (e.key === "Right" || e.key === "ArrowRight") {
+      rightPressed = true;
+    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+      leftPressed = true;
+    }
+  }
+
+  function keyUpHandler(e) {
+    if (e.key === "Right" || e.key === "ArrowRight") {
+      rightPressed = false;
+    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+      leftPressed = false;
+    }
+  }
+
+  function drawBallGame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Ball
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = "#d95550";
+    ctx.fill();
+    ctx.closePath();
+
+    // Paddle
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#bb4945";
+    ctx.fill();
+    ctx.closePath();
+
+    if (x + dx > canvas.width - radius || x + dx < radius) {
+      dx = -dx;
+    }
+    if (y + dy < radius) {
+      dy = -dy;
+    } else if (y + dy > canvas.height - radius) {
+      if (x > paddleX && x < paddleX + paddleWidth) {
+        dy = -dy;
+      } else {
+        alert("😢 Oops! Try again.");
+        clearInterval(ballInterval);
+      }
+    }
+
+    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+      paddleX += 5;
+    } else if (leftPressed && paddleX > 0) {
+      paddleX -= 5;
+    }
+
+    x += dx;
+    y += dy;
+  }
+</script>
+
+</body>
+</html>

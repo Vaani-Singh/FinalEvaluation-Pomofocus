@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journaling for Mental Health</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      padding-top: 3rem;
+    }
+
+    .hero {
+      background-color: #d95550;
+      color: white;
+      padding: 3rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      margin-top: 2.5rem;
+      font-weight: bold;
+      color: #d95550;
+    }
+
+    .journal-area {
+      min-height: 200px;
+      resize: vertical;
+      border: 1px solid #ced4da;
+      border-radius: 0.5rem;
+    }
+
+    .btn-primary {
+      background-color: #d95550;
+      border-color: #d95550;
+    }
+
+    .btn-primary:hover {
+      background-color: #b8403e;
+      border-color: #b8403e;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border: none;
+    }
+
+    .card-custom {
+      background-color: rgb(246, 244, 244);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      margin-top: 2rem;
+    }
+
+    .bg-dark-mode {
+      background-color: #212529 !important;
+      color: #f8f9fa !important;
+    }
+
+    .text-center-footer {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Updated Return Button Styling */
+    .return-btn {
+      background-color: #d95550;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      margin-top: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .return-btn:hover {
+      background-color: #b8403e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero text-center">
+      <h1 class="display-5 fw-bold">Journaling for Mental Health</h1>
+      <p class="lead">Discover the benefits and start your journey to emotional wellness</p>
+    </div>
+
+    <div class="card-custom">
+      <h3 class="section-title">Mental Health Benefits of Journaling</h3>
+      <section>
+        <h2>Why Journaling Was Added to the Pomodoro Timer</h2>
+        <p>We’ve introduced a journaling feature alongside the Pomodoro technique to provide users with a more holistic approach to productivity and emotional well-being...</p>
+      </section>
+
+      <h3 class="section-title">Your Journal</h3>
+      <form id="journalForm">
+        <div class="mb-3">
+          <label for="journalEntry" class="form-label">Write your thoughts below:</label>
+          <textarea class="form-control journal-area" id="journalEntry" rows="10" placeholder="Start writing..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Entry</button>
+      </form>
+
+      <div class="mt-4" id="savedEntry" style="display:none;">
+        <h5 class="text-success">Your entry has been saved:</h5>
+        <p id="entryPreview" class="border rounded p-3 bg-light"></p>
+      </div>
+
+      <button class="btn btn-secondary mt-4" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+
+    <!-- Return to Home Page Button (Updated) -->
+    <div class="text-center-footer">
+      <a href="/" class="btn return-btn">⬅ Return to Home</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("bg-dark-mode");
+      const card = document.querySelector('.card-custom');
+      card.classList.toggle("bg-dark-mode");
+    }
+
+    document.getElementById("journalForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const entry = document.getElementById("journalEntry").value;
+      document.getElementById("entryPreview").innerText = entry;
+      document.getElementById("savedEntry").style.display = "block";
+      document.getElementById("journalEntry").value = "";
+    });
+  </script>
+</body>
+</html>
